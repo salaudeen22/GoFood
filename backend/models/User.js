@@ -21,7 +21,7 @@ const UserSchema = new Schema({
     },
     date: {
         type: Date,
-        default: Date.now, // Set default value to current date and time
+        default: Date.now, 
         required: true
     },
 });
