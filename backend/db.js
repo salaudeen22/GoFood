@@ -1,20 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const mongoURI = "mongodb+srv://salaudeensalu:9535443020@cluster0.kssfjtz.mongodb.net/GOFOODMERN?retryWrites=true&w=majority";
+const mongoURI =
+  "mongodb+srv://salaudeensalu:9535443020@cluster0.kssfjtz.mongodb.net/GOFOODMERN?retryWrites=true&w=majority";
 
 const mongoDB = async () => {
   try {
-    await mongoose.connect(mongoURI);
-    console.log("Connected to MongoDB");
-    const fetchdata=await mongoose.connection.db.collection("food_item");
-    fetchdata.find({}).toArray(function(err,data)
-    {
-      if(err)console.log(err);
-      else
-      {
-        console.log(data);
-      }
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
+    console.log("Connected to MongoDB");
+
+    const foodItemCollection = mongoose.connection.db.collection("food_item");
+
+    const fetchData = await foodItemCollection.find({}).toArray();
+
+    if (fetchData === null) {
+      console.log("Data is null");
+    } else {
+      global.food_item = fetchData;
+      console.log(global.food_item);
+    }
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
