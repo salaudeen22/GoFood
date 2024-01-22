@@ -6,9 +6,9 @@ import Card from "../components/Card";
 import { CartProvider } from "../components/ContextReducer";
 
 export default function Home() {
-  const [search, setseaarch] = useState("");
-  const [foodCat, setfoodCat] = useState([]);
-  const [foodItem, setfoodItem] = useState([]);
+  const [search, setSearch] = useState("");
+  const [foodCat, setFoodCat] = useState([]);
+  const [foodItem, setFoodItem] = useState([]);
 
   const loadData = async () => {
     try {
@@ -21,8 +21,8 @@ export default function Home() {
 
       const data = await response.json();
       console.log(data);
-      setfoodItem(data[0]);
-      setfoodCat(data[1]);
+      setFoodItem(data[0]);
+      setFoodCat(data[1]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -31,7 +31,6 @@ export default function Home() {
   useEffect(() => {
     loadData();
   }, []);
-
   return (
     <CartProvider>
       <div>
@@ -54,7 +53,7 @@ export default function Home() {
                     placeholder="Search"
                     aria-label="Search"
                     value={search}
-                    onChange={(e) => setseaarch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                   {/* <button
                   className="btn btn-outline-success text-white bg-success"
@@ -117,14 +116,14 @@ export default function Home() {
         </div>
 
         <div className="container">
-          {foodCat.length !== 0 ? (
+          {foodCat && foodCat.length !== 0 ? (
             foodCat.map((data) => (
               <div key={data._id} className="row mb-3">
                 <div>
                   <div className="fs-3 m-3">{data.CategoryName}</div>
                 </div>
                 <hr />
-                {foodItem.length !== 0 ? (
+                {foodItem && foodItem.length !== 0 ? (
                   foodItem
                     .filter(
                       (item) =>
@@ -137,7 +136,7 @@ export default function Home() {
                         className="col-12 col-md-6 col-lg-3"
                       >
                         <Card
-                       foodItem={filteritem}
+                          foodItem={filteritem}
                           options={filteritem.options}
                         />
                       </div>
