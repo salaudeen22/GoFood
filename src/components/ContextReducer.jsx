@@ -37,7 +37,11 @@ const reducer = (state, action) => {
           };
         }
       });
-      return arr;
+    case "DROP":
+      let emptyarr = [];
+      return emptyarr;
+      
+    return arr;
 
     default:
       return state;
