@@ -4,35 +4,36 @@ const Order = require("../models/Order");
 
 router.post("/orderData", async (req, res) => {
   try {
-    let data = req.body.order_data;
+    const data = { order_data: req.body.order_data };
+    const eID = await Order.findOne({ email: req.body.email });
 
-    // Check if data is an array before using splice
-    if (!Array.isArray(data)) {
-      data = []; // If not an array, initialize as an empty array
-    }
-
-    // Add a new object to the beginning of the array
-    data.splice(0, 0, { order_data: req.body.order_data });
-
-    let eID = await Order.findOne({ 'email': req.body.email });
-    console.log(eID);
-
-    if (!eID) {
+    if (eID === null) {
       await Order.create({
         email: req.body.email,
-        order_data: [data]
+        order_data: [data],
       });
+      res.json({ success: true });
     } else {
       await Order.findOneAndUpdate(
         { email: req.body.email },
         { $push: { order_data: data } }
       );
+      res.json({ success: true });
     }
-
-    res.json({ success: true });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Server error: " + error.message);
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+router.post("/myorderdata", async (req, res) => {
+  try {
+    let myData = await Order.findOne({ email: req.body.email });
+    res.json({
+      order_data:myData
+    })
+  } catch (error) {
+    res.send("sever Error",error.message);
   }
 });
 

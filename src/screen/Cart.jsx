@@ -1,7 +1,6 @@
 import React from "react";
 import { useCart, useDispatchCart } from "../components/ContextReducer";
 
-
 function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
@@ -16,6 +15,7 @@ function Cart() {
 
   const HandleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
+  
     let response = await fetch("http://localhost:4000/api/orderData", {
       method: "POST",
       headers: {
@@ -27,7 +27,8 @@ function Cart() {
         order_date: new Date().toDateString(),
       }),
     });
-    console.log("order response",response);
+
+    console.log("order response", response);
     if (response.status === 200) {
       dispatch({ type: "DROP" });
     }
@@ -82,7 +83,12 @@ function Cart() {
       </table>
       <div className="fs-4"> Total Prize:{totalprice}/-</div>
       <div>
-        <button className="btn bg-success mt-5 text-white" onClick={HandleCheckOut}>Check out</button>
+        <button
+          className="btn bg-success mt-5 text-white"
+          onClick={HandleCheckOut}
+        >
+          Check out
+        </button>
       </div>
     </div>
   );

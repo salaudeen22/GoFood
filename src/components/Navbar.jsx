@@ -7,6 +7,7 @@ import { useCart } from "./ContextReducer";
 
 function Navbar() {
   let data = useCart();
+  const cartItemCount = data ? data.length : 0;
   const navigate = useNavigate();
   const [CartView, setCartView] = useState(false);
   const handleLogout = () => {
@@ -39,7 +40,7 @@ function Navbar() {
             </li>
             {localStorage.getItem("authtoken") ? (
               <li className="nav-item ">
-                <Link className="nav-link active fs-5" to="/">
+                <Link className="nav-link active fs-5" to="/myOrder">
                   My orders
                 </Link>
               </li>
@@ -68,7 +69,7 @@ function Navbar() {
               >
                 My Cart{" "}
                 <Badge pill bg="danger">
-                 {data.length}
+                {cartItemCount}
                 </Badge>
               </div>
 

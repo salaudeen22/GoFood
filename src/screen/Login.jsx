@@ -29,6 +29,7 @@ function Login() {
       alert("Enter valid credentials");
     }
     if (json.success) {
+      console.log(credentials.email);
       localStorage.setItem("userEmail",credentials.email);
       localStorage.setItem("authtoken",json.authtoken);
       console.log(localStorage.getItem("authtoken"));
