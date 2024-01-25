@@ -1,63 +1,57 @@
 import Model from "../Model";
+import Cart from "../screen/Cart";
 import React, { useState } from "react";
 import Badge from "react-bootstrap/Badge";
-import Cart from "../screen/Cart";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./ContextReducer";
+import logo from "../Assessts/assesst/images-removebg-preview.png";
 
-function Navbar() {
+function NavBar() {
   let data = useCart();
   const cartItemCount = data ? data.length : 0;
   const navigate = useNavigate();
   const [CartView, setCartView] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem("authtoken");
     navigate("/login");
   };
+
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-        <Link className="navbar-brand fs-1 fst-italic" to="#">
-          GoFood
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2">
-            <li className="nav-item ">
-              <Link className="nav-link active fs-5" to="/">
+      <Navbar expand="lg" bg="success">
+        <Navbar.Brand as={Link} to="#" className="fs-1 fst-italic">
+          <img src={logo} alt="VP Logo" height="50px" width="50px" />
+        </Navbar.Brand>
+
+        <Navbar.Toggle aria-controls="navbarNav" />
+
+        <Navbar.Collapse id="navbarNav">
+          <Nav className="me-auto mb-2">
+            <Nav.Item>
+              <Nav.Link as={Link} to="/" className="fs-5">
                 Home
-              </Link>
-            </li>
-            {localStorage.getItem("authtoken") ? (
-              <li className="nav-item ">
-                <Link className="nav-link active fs-5" to="/myOrder">
+              </Nav.Link>
+            </Nav.Item>
+
+            {localStorage.getItem("authtoken") && (
+              <Nav.Item>
+                <Nav.Link as={Link} to="/myOrder" className="fs-5">
                   My orders
-                </Link>
-              </li>
-            ) : (
-              " "
+                </Nav.Link>
+              </Nav.Item>
             )}
-          </ul>
+          </Nav>
+
           {!localStorage.getItem("authtoken") ? (
-            <div className="d-flex ">
-              <Link className="btn bg-white text-success  mx-1" to="/login">
+            <div className="d-flex">
+              <Link className="btn bg-white text-success mx-1" to="/login">
                 Login
               </Link>
 
-              <Link
-                className="btn bg-white text-success  mx-1"
-                to="/createuser"
-              >
+              <Link className="btn bg-white text-success mx-1" to="/createuser">
                 SignUp
               </Link>
             </div>
@@ -69,13 +63,13 @@ function Navbar() {
               >
                 My Cart{" "}
                 <Badge pill bg="danger">
-                {cartItemCount}
+                  {cartItemCount}
                 </Badge>
               </div>
 
               {CartView && (
                 <Model onClose={() => setCartView(false)}>
-               <Cart/>
+                  <Cart />
                 </Model>
               )}
               <div
@@ -86,10 +80,10 @@ function Navbar() {
               </div>
             </div>
           )}
-        </div>
-      </nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   );
 }
 
-export default Navbar;
+export default NavBar;

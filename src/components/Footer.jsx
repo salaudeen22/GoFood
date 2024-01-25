@@ -12,7 +12,7 @@ function Footer() {
           >
             <svg className ="bi" width="30" height="24"></svg>
           </Link>
-          <span className ="text-muted">© 20223 GoFood, Inc</span>
+          <span className ="text-muted">© 2024 Street2site, salaudeen N</span>
         </div>
 
         <ul className ="nav col-md-4 justify-content-end list-unstyled d-flex"></ul>

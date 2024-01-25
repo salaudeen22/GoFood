@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart, useDispatchCart } from "../components/ContextReducer";
+import { universalurl } from "../helper";
 
 function Cart() {
   let data = useCart();
@@ -16,7 +17,7 @@ function Cart() {
   const HandleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
   
-    let response = await fetch("http://localhost:4000/api/orderData", {
+    let response = await fetch(`${universalurl}/api/orderData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,8 +28,9 @@ function Cart() {
         order_date: new Date().toDateString(),
       }),
     });
+    
 
-    console.log("order response", response);
+    // console.log("order response", response);
     if (response.status === 200) {
       dispatch({ type: "DROP" });
     }

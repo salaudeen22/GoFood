@@ -1,0 +1,1 @@
+export const universalurl="https://gofoodmern-n7xu.onrender.com";

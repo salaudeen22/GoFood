@@ -56,7 +56,7 @@ export default function Card(props) {
       size: size,
       qty: quty,
     });
-    console.log(data);
+    // console.log(data);
   };
   useEffect(() => {
     if (prizref.current) {

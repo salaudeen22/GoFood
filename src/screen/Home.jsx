@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
+import { universalurl } from "../helper";
 
 import { CartProvider } from "../components/ContextReducer";
 
@@ -12,15 +13,16 @@ export default function Home() {
 
   const loadData = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/foodData", {
+      const response = await fetch(`${universalurl}/api/foodData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
+      
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setFoodItem(data[0]);
       setFoodCat(data[1]);
     } catch (error) {

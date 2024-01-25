@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import { universalurl } from '../helper';
 
 export default function MyOrder() {
   const [orderData, setOrderData] = useState({ _id: '', email: '', order_data: [], __v: 0 });
 
   const fetchMyOrder = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/myorderdata", {
+      const response = await fetch(`${universalurl}/api/myorderdata`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,10 +17,10 @@ export default function MyOrder() {
           email: localStorage.getItem('userEmail'),
         }),
       });
-
+      
       if (response.ok) {
         const responseData = await response.json();
-        console.log('Fetched order data:', responseData);
+        // console.log('Fetched order data:', responseData);
         setOrderData(responseData);
       } else {
         console.error("Failed to fetch order data");

@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
 const port = 4000;
 
 const mongoDB = require("./db");
